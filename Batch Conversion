@@ -1,0 +1,21 @@
+#batch converting files from docx to txt
+import os
+import win32com
+from  win32com.client import Dispatch, constants
+
+def docx2txt(input):
+    docx_name_list = os.listdir(input)
+    for dn in docx_name_list:
+        if not os.path.splitext(dn)[1] == ".docx":
+            continue
+        wordapp = win32com.client.Dispatch('Word.Application')
+        path1 = os.path.join(input, dn)
+        doc = wordapp.Documents.Open(path1)
+        output = os.path.splitext(dn)[0]
+        output = os.path.join(input, output)
+        doc.SaveAs(output, 4)
+        doc.Close()
+
+
+path1 = r'D:\Corpus Project\UN2015CE-docx'
+docx2txt(path1)
