@@ -1,4 +1,4 @@
-#batch converting files from docx to txt
+#batch converting files from docx to txt within one folder
 import os
 import win32com
 from  win32com.client import Dispatch, constants
