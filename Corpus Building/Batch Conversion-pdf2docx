@@ -1,0 +1,32 @@
+#如需pdf转txt,可以先转docx，再转txt
+#注意不要把文件名取名为模块同名pdf2docx
+
+import os
+from pdf2docx import Converter
+
+
+def pdf_docx():
+    # 获取当前工作目录
+    source_file_path = r'D:\Corpus Project\un_2015\un_2015_ce\data_process\data_raw_pdf'
+    target_file_path = r'D:\Corpus Project\un_2015\un_2015_ce\data_process\data_raw_pdf2txt'
+    # 遍历所有文件
+    for file in os.listdir(source_file_path):
+        # 获取文件后缀
+        suff_name = os.path.splitext(file)[1]
+        # 过滤非pdf格式文件
+        if suff_name != '.pdf':
+            continue
+        # 获取文件名称
+        file_name = os.path.splitext(file)[0]
+        # pdf文件名称
+        pdf_name = os.path.join(source_file_path, file)
+        # 要转换的docx文件名称
+        docx_name = os.path.join(target_file_path, file_name + '.docx')
+        # 加载pdf文档
+        cv = Converter(pdf_name)
+        cv.convert(docx_name)
+        cv.close()
+
+
+if __name__ == '__main__':
+    pdf_docx()
