@@ -1,3 +1,4 @@
+#*doc转txt需要两步：doc转docx，docx转txt
 #将.docx文件转换成.txt到新文件夹（batch conversion to a new folder）
 #导入os库，导入win32com库、调用win32com.client.dispatch模块
 import os
@@ -34,3 +35,63 @@ def docx2txt(sourcefolder, targetfolder):
 path1 = input()
 path2 = input()
 docx2txt(path1, path2)
+
+**********************************************************************************************
+#重装系统和驱动后的更新版本
+#将.docx文件转换成.txt到新文件夹（batch conversion to a new folder）
+#导入os库，导入win32com库、调用win32com.client.dispatch模块
+import os
+import win32com
+from win32com.client import Dispatch, constants
+import time
+import pythoncom
+
+#自定义函数docx2txt，包括两个变量：放docx文件的原文件夹sourcefolder、放转换后的txt文件的目标文件夹targetfolder
+
+def docx2txt(sourcefolder, targetfolder):
+    #自定义变量docx_name_list，函数os.listdir()返回原文件夹里的文件名列表
+    doc_name_list = os.listdir(sourcefolder)
+
+    #遍历文件名列表，每一个文件名赋值给变量element
+    for element in doc_name_list:
+        word = win32com.client.Dispatch('Word.Application')
+        #变量原文件sourcefile=函数os.path.splitext()分开每个文件名和拓展名，即print(sourcefile)返回（filename,extension）
+        sourcefile = os.path.splitext(element)
+        filename = sourcefile[0]
+        extension = sourcefile[1]
+        #如果拓展名不是.docx，停止当前文件，继续遍历下一个文件，直到有.docx文件
+        if extension != '.docx':
+            continue
+        #原文件路径=函数os.path.join()合并文件夹名和文件名，这样就不用担心漏掉\\符号
+        sourcefilepath = os.path.join(sourcefolder, element)
+        print("原文本路径"+sourcefilepath)
+#调用win32com.client.dispatch的word工具，open函数打开.docx的文
+        doc = word.Documents.Open(sourcefilepath)
+#目标文件路径=目标文件夹+\\+文件名，文件名可以与原文件相同，也可以自己修改。此处为与原文件名相同，没带拓展名
+        targetfilepath = os.path.join(targetfolder, filename)
+        #将原文件格式，调用保存函数SaveAs（目标文件路径，格式）。txt=4, html=10, docx=16, pdf=17。这时候才有拓展名.txt
+        doc.SaveAs(targetfilepath + '.txt', 4)
+        time.sleep(1)
+        doc.Close()
+        print("目标文件路径"+targetfilepath)
+        word.Quit()
+#关闭文档流
+
+# 在控制台输入你的原文件夹路径path1，D:\Corpus Project\un_2015\un_2015_ce\data_process\data_raw_doc
+# 在控制台输入你的目标文件夹路径path2，D:\Corpus Project\un_2015\un_2015_ce\data_process\data_raw_doc2docx
+path1 = input()
+path2 = input()
+docx2txt(path1, path2)
+
+
+
+
+
+
+
+
+
+
+
+
+
