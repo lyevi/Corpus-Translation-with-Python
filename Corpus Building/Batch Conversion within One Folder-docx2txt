@@ -1,4 +1,6 @@
 #在一个文件夹内批量将docx文件格式转换为纯文本txt格式(convert .docx files to .txt files within one folder)
+#注意不要把文件名取名为模块同名docx2txt
+
 import os
 import win32com
 from  win32com.client import Dispatch, constants
