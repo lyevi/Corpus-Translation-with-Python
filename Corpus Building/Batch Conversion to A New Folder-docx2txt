@@ -1,4 +1,6 @@
 #*doc转txt需要两步：doc转docx，docx转txt
+#注意不要把文件名取名为模块或函数同名xxxx2xxxx，会报错
+
 #将.docx文件转换成.txt到新文件夹（batch conversion to a new folder）
 #导入os库，导入win32com库、调用win32com.client.dispatch模块
 import os
